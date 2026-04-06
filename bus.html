@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>バス位置</title>
+</head>
+<body>
+  <h1>バス位置</h1>
+  <p id="pos">読み込み中...</p>
+
+  <script>
+    async function update() {
+      const res = await fetch("https://takatochibus-default-rtdb.firebaseio.com/bus1.json");
+      const data = await res.json();
+
+      document.getElementById("pos").innerText =
+        "X: " + data.x + " Z: " + data.z + " 状態: " + data.status;
+    }
+
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
