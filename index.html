@@ -1,22 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>バス位置</title>
-</head>
-<body>
-  <h1>バス位置</h1>
-  <p id="pos">読み込み中...</p>
+<script>
+async function update() {
+  const res = await fetch("https://xxxxx-default-rtdb.firebaseio.com/stops.json");
+  const data = await res.json();
 
-  <script>
-    async function update() {
-      const res = await fetch("https://takatochibus-default-rtdb.firebaseio.com/bus1.json");
-      const data = await res.json();
+  let text = "";
 
-      document.getElementById("pos").innerText =
-        "X: " + data.x + " Z: " + data.z + " 状態: " + data.status;
-    }
+  for (let stop in data) {
+    text += stop + " → " + data[stop].busName + "<br>";
+  }
 
-    setInterval(update, 1000);
-  </script>
-</body>
-</html>
+  document.getElementById("output").innerHTML = text;
+}
+
+setInterval(update, 1000);
+</script>
+
+<div id="output">読み込み中...</div>
